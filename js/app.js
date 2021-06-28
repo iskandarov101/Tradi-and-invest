@@ -61,9 +61,59 @@ elTabs.addEventListener('click', (evt) => {
   }
 })
 
-//=========   TABS =========
+//=========   PROGRESS =========
+
+const elProgress = document.querySelector('.order__progress')
+const elPrev = document.getElementById('order-prev')
+const elNext = document.getElementById('order-next')
+const circles = document.querySelectorAll('.order__circle')
+const elOrderText = document.querySelector('.order__text')
 
 
+const orderTextArr = ['Предварительная бесплатная консультация по телефону или онлайн', 'Встреча в офисе. Изучение документов, оценка перспективы дела', 'Заключаем договор/соглашение между клиентом и адвокатской конторой', 'Начинаем работу по согласованному делу вместе']
+let currentActive = 1
 
+elNext.addEventListener('click', () => {
+  currentActive++
+  elOrderText.textContent = orderTextArr[currentActive - 1]
 
+  if (currentActive > circles.length) {
+    currentActive = circles.length
+  }
 
+  update()
+})
+
+elPrev.addEventListener('click', () => {
+  currentActive--
+  elOrderText.textContent = orderTextArr[currentActive - 1]
+
+  if (currentActive < 1) {
+    currentActive = 1
+  }
+
+  update()
+})
+
+const update = () => {
+  circles.forEach((circle, idx) => {
+    if (idx < currentActive) {
+      circle.classList.add('order__circle--active')
+    } else {
+      circle.classList.remove('order__circle--active')
+    }
+  })
+
+  const actives = document.querySelectorAll('.order__circle--active')
+
+  elProgress.style.width = (actives.length - 1) / (circles.length - 1) * 100 + '%'
+
+  if (currentActive === 1) {
+    elPrev.disabled = true
+  } else if (currentActive === circles.length) {
+    elNext.disabled = true
+  } else {
+    elPrev.disabled = false
+    elNext.disabled = false
+  }
+}
