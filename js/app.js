@@ -60,3 +60,10 @@ elTabs.addEventListener('click', (evt) => {
     })
   }
 })
+
+//=========   TABS =========
+
+
+
+
+
