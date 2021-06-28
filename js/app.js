@@ -20,4 +20,43 @@ const headerScroll = () => {
     elHeader.classList.remove('header-scroll')
   }
 }
-window.addEventListener('scroll', headerScroll)
+window.addEventListener('scroll', headerScroll);
+
+//====== TABS=======
+
+const elTab = document.querySelectorAll('.tabpanel__item')
+const elTabContents = document.querySelectorAll('.tabs__item')
+const elTabs = document.querySelector('.tabpanel__list')
+
+const noneTabs = () => {
+  elTabContents.forEach(elTabContent => {
+    elTabContent.classList.remove('show');
+    elTabContent.classList.add('hide')
+  })
+
+  elTab.forEach(tab => {
+    tab.classList.remove('tabpanel__item--active');
+  })
+}
+
+
+const showTabs = (i = 0) => {
+  elTabContents[i].classList.add('show', 'fade')
+  elTabContents[i].classList.remove('hide')
+  elTab[i].classList.add('tabpanel__item--active')
+}
+
+noneTabs()
+showTabs()
+
+elTabs.addEventListener('click', (evt) => {
+  if (evt.target.matches('.tabpanel__item')) {
+
+    elTab.forEach((tab, i) => {
+      if (evt.target == tab) {
+        noneTabs()
+        showTabs(i)
+      }
+    })
+  }
+})
